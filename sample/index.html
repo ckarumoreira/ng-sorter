@@ -1,0 +1,31 @@
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <table>
+      <thead>
+        <th>
+          Name
+          <sorter order="config.order.name" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
+        </th>
+        <th>
+          Address
+          <sorter order="config.order.address" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
+        </th>
+        <th>
+          Age
+          <sorter order="config.order.age" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
+        </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="person in persons | sort:config">
+        </tr>
+      </tbody>
+    </table>
+
+    <script src="../dist/js/vendors.js"></script>
+    <script src="../dist/js/ng-sorter.js"></script>
+    <script src="../dist/js/templates.js"></script>
+  </body>
+</html>

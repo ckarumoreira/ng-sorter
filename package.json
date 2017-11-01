@@ -1,0 +1,28 @@
+{
+  "name": "ng-sorter",
+  "version": "0.1.0",
+  "description": "a module for multi-field sort on angularjs",
+  "keywords": [
+    "angularjs",
+    "sort",
+    "orderby",
+    "ng-sorter"
+  ],
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ckarumoreira",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-pug": "^3.3.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}
