@@ -1,2 +1,2 @@
-span(class="fa fa-caret-up", ng-click="$ctrl.asc()", ng-class="$ctrl.classes.ascending")
-span(class="fa fa-caret-down", ng-click="$ctrl.desc()", ng-class="$ctrl.classes.descending")
+span.sort-asc(ng-click="asc()", ng-class="{ 'active': isAsc() }")
+span.sort-desc(ng-click="desc()", ng-class="{ 'active': isDesc() }")

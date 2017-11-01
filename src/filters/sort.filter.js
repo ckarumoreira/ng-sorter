@@ -6,39 +6,31 @@
         return arr;
       }
 
-      let array = arr.slice();
+      let list = arr.slice();
 
       let options = angular.copy(opt);
 
       let filters = options.priority.filter(function (item) {
-        return options.config[item].sort !== 'none';
+        return options.config[item].direction !== 'none';
       });
       
-      let sortStack;
-
-      if (filter.length >= 1) {
-        let config = options.config[filters[0]];
-        let sortStack = firstBy(config.func, ConfigureSort(config));
-
-        for (let i = 1; i < filters.length; i++) {
-          config = options.config[filters[i]];
-          sortStack = sortStack.thenBy(config.func, ConfigureSort(config));
+      if (filters.length > 0) {
+        let sortStack = firstBy(function (item) { return 0; });
+        
+        for (let i = 0; i < filters.length; i++) {
+          let filter = filters[i];
+          let config = options.config[filter];
+          if (config.direction === 'desc') {
+            sortStack = sortStack.thenBy(config.func, -1);
+          } else {
+            sortStack = sortStack.thenBy(config.func);
+          }
         }
-      }
-      
-      if (sortStack) {
-        array.sort(sortStack);
+        
+        list.sort(sortStack);
       }
 
-      return array;
+      return list;
     };
-
-    function ConfigureSort(config) {
-      let options = { ignoreCase: true };
-      if (config.sort == 'descending') {
-        options.direction = -1;
-      }
-      return options;
-    }
   });
 })();

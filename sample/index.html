@@ -1,31 +1,93 @@
 <html>
   <head>
+    <title>ng-sorter sample app</title>
+    <style>
+      sorter {
+        font-size: 10px;
+        display: inline-block;
+      }
     
+      sorter span {
+        color: #c0c0c0;
+        font-weight: normal;
+        display: inline-block;
+        padding: 2px 10px;
+      }
+      
+      sorter span.active {
+        font-size: 12px;
+        color: #000;
+        font-weight: bold;
+      }
+      
+      sorter > .sort-asc:before {
+        content: "Asc";
+      }
+      
+      sorter > .sort-desc:before {
+        content: "Desc";
+      }
+    </style>
   </head>
-  <body>
+  <body ng-app="SampleApp" ng-controller="Controller">
+    <h1>Sample for ng-sorter!</h1>
+    
     <table>
       <thead>
-        <th>
+        <td>
           Name
-          <sorter order="config.order.name" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
-        </th>
-        <th>
+          <sorter order="order.config.name" />
+        </td>
+        <td>
           Address
-          <sorter order="config.order.address" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
-        </th>
-        <th>
+          <sorter order="order.config.address" />
+        </td>
+        <td>
           Age
-          <sorter order="config.order.age" base-icon="fa" asc-icon="fa-caret-up" desc-icon="fa-caret-down" />
-        </th>
+          <sorter order="order.config.age" />
+        </td>
       </thead>
       <tbody>
-        <tr ng-repeat="person in persons | sort:config">
+        <tr ng-repeat="person in persons | sort: order">
+          <td ng-bind="::person.name"></td>
+          <td ng-bind="::person.address"></td>
+          <td ng-bind="::person.age"></td>
         </tr>
       </tbody>
     </table>
 
-    <script src="../dist/js/vendors.js"></script>
-    <script src="../dist/js/ng-sorter.js"></script>
-    <script src="../dist/js/templates.js"></script>
+    <script src="../components/angular/angular.min.js"></script>
+    <script src="../dist/ng-sorter.min.js"></script>
+    <script>
+      (function () {
+        angular.module('SampleApp', [ 'ng-sorter' ])
+        .controller('Controller', function ($scope) {
+          $scope.order = {
+            priority: [ 'name', 'address', 'age' ],
+            config: {
+              name: { direction: 'desc', func: function (item) { return item.name; } },
+              address: { direction: 'none', func: function (item) { return item.address; } },
+              age: { direction: 'none', func: function (item) { return item.age; } }
+            }
+          };
+          
+          $scope.persons = [
+            new Person('Adam Smith', 'Random Av, 472', 55),
+            new Person('Beth Aldrin', 'Another Av, 5527', 33),
+            new Person('Adam Smith', 'Random Av, 137', 57),
+            new Person('Alex Johnson', '17th Av, 7', 15),
+            new Person('Zepp Doe', 'Zepp\'s Street, 78', 7),
+            new Person('Adam Smith', 'Random Av, 1137', 33),
+            new Person('Zepp Doe', 'Zepp\'s Street, 78', 18),
+          ];
+          
+          function Person(name, address, age) {
+            this.name = name;
+            this.address = address;
+            this.age = age;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

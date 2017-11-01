@@ -2,11 +2,16 @@ var gulp = require("gulp"),
   uglify = require("gulp-uglify"),
   concat = require("gulp-concat"),
   pug = require("gulp-pug"),
+  babel = require("gulp-babel"),
   templateCache = require("gulp-angular-templatecache");
 
 gulp.task("sorter", () => {
   gulp.src("src/**/*.js")
     .pipe(concat("ng-sorter.js"))
+    .pipe(babel({
+      presets: ["es2015"],
+      plugins: ["transform-remove-strict-mode"]
+    }))
     .pipe(gulp.dest("dist/js"));
 });
 
@@ -27,16 +32,19 @@ gulp.task("vendors", () => {
     .pipe(gulp.dest("dist/js"));
 });
 
-gulp.task("minify", [ "sorter", "templates"], () => {
+gulp.task("minify", [ "sorter", "templates", "vendors" ], () => {
   gulp.src([
-    "dist/js/ng-sorter.js",
-    "dist/js/templates"
-  ])
+      "dist/js/vendors.js",
+      "dist/js/ng-sorter.js",
+      "dist/js/templates.js"
+    ])
     .pipe(concat("ng-sorter.min.js"))
-    .pipe(uglify())
-    .pipe(gulp.dest("dist/js"));
+    .pipe(uglify().on('error', function(e){
+      console.log(e);
+    }))
+    .pipe(gulp.dest("dist"));
 });
 
-gulp.task("default", ["minify", "vendors"], () => {
+gulp.task("default", ["minify"], () => {
   
 });
