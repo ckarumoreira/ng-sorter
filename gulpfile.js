@@ -1,6 +1,7 @@
 var gulp = require("gulp"),
   uglify = require("gulp-uglify"),
   concat = require("gulp-concat"),
+  copy = require("gulp-copy"),
   pug = require("gulp-pug"),
   babel = require("gulp-babel"),
   templateCache = require("gulp-angular-templatecache");
